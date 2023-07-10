@@ -12,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "LoginCheckFilter",urlPatterns = "/*")
+/**
+ * 检查用户是否已经完成登录
+ */
+@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
 @Slf4j
-public class LoginCheckFilter implements Filter {
+public class LoginCheckFilter implements Filter{
     //路径匹配器，支持通配符
     public static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
@@ -30,14 +33,20 @@ public class LoginCheckFilter implements Filter {
 
         //定义不需要处理的请求路径
         String[] urls = new String[]{
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources",
+                "/v2/api-docs",
                 "/employee/login",
                 "/employee/logout",
                 "/backend/**",
                 "/front/**",
+                "/comon/**",
                 "/user/sendMsg",
-                "/user/login"
-        };
+                "/user/login",
 
+
+        };
 
         //2、判断本次请求是否需要处理
         boolean check = check(urls, requestURI);
@@ -56,9 +65,6 @@ public class LoginCheckFilter implements Filter {
             Long empId = (Long) request.getSession().getAttribute("employee");
             BaseContext.setCurrentId(empId);
 
-            long id = Thread.currentThread().getId();
-            log.info("当前的线程id为：{}",id);
-
             filterChain.doFilter(request,response);
             return;
         }
@@ -67,11 +73,8 @@ public class LoginCheckFilter implements Filter {
         if(request.getSession().getAttribute("user") != null){
             log.info("用户已登录，用户id为：{}",request.getSession().getAttribute("user"));
 
-            Long empId = (Long) request.getSession().getAttribute("user");
-            BaseContext.setCurrentId(empId);
-
-            long id = Thread.currentThread().getId();
-            log.info("当前的线程id为：{}",id);
+            Long userId = (Long) request.getSession().getAttribute("user");
+            BaseContext.setCurrentId(userId);
 
             filterChain.doFilter(request,response);
             return;
@@ -100,5 +103,3 @@ public class LoginCheckFilter implements Filter {
         return false;
     }
 }
-
-
