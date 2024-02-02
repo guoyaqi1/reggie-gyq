@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="reggie_take_gyq" />
+        <module name="ip_springboot_starter" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ip_springboot_starter" options="-parameters" />
       <module name="reggie_take_gyq" options="-parameters" />
     </option>
   </component>

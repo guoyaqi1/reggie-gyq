@@ -113,6 +113,20 @@
             <version>3.0.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--自定义ip访问计数-->
+        <dependency>
+            <groupId>cn.itcast</groupId>
+            <artifactId>ip_springboot_starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

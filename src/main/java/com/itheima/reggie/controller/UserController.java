@@ -1,5 +1,6 @@
 package com.itheima.reggie.controller;
 
+import cn.itcast.service.IpCountService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.itheima.reggie.comon.R;
 import com.itheima.reggie.entity.User;
@@ -19,13 +20,16 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @Slf4j
 @RequestMapping("/user")
-
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserService userService;
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    //@Autowired
+    //private IpCountService ipCountService;
 
     /**
      * 发送手机短信验证码
@@ -66,6 +70,9 @@ public class UserController {
     @PostMapping("/login")
     public R<User> login(@RequestBody Map map, HttpSession session){
         log.info(map.toString());
+        //记录访问次数
+        //ipCountService.count();
+
         //获取手机号
         String phone = map.get("phone").toString();
         //获取验证码
